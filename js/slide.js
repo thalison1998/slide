@@ -49,8 +49,46 @@
         wrapper.addEventListener('touchend',onEnd)
         
     }
+
+// slides config //
+
+function slidePosition(slide){
+    const margin = (wrapper.offsetWidth - slide.offsetWidth) / 2;
+    console.log(margin)
+    return - (slide.offsetLeft - margin)
+}
+
+function slidesIndexNav(slideArray,index){
+    const last = slideArray.length - 1
+    console.log(last)
+       const indexChange = {
+        prev:index ? index - 1:undefined,
+        active:index,
+        next:index === last ? undefined: index + 1,
+    }
+    console.log(indexChange)
+}
+
+
+function slidesconfig (){
+    const slideArray = [...slide.children].map((element) => {
+        const position = slidePosition(element)
+        return{ position, element }
+    })
+    changeSlide(slideArray,2)
+}
+
+function changeSlide(slideArray,index){
+    const activeSlide = slideArray[index]
+    moveSlide(activeSlide.position)
+    slidesIndexNav(slideArray, index)
+    dist.finalPosition = activeSlide.position
+}
+
+
     function init(){
         addSlideEvents();
+        slidesconfig ();
         return this;
     }
     return{
